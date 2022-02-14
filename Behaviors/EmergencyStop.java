@@ -1,5 +1,6 @@
 import lejos.hardware.Button;
 import lejos.robotics.navigation.MovePilot;
+import lejos.robotics.subsumption.Behavior;
 
 public class EmergencyStop implements Behavior {
 	private MovePilot pilot;
