@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.BaseRegulatedMotor;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
@@ -31,6 +33,16 @@ public class Driver {
 		MovePilot pilot = getPilot(MotorPort.A, MotorPort.D, 43, 120);
 		pilot.setLinearSpeed(100);
 		
+		//Bluetooth connection handling
+		BTConnect bt = new BTConnect();
+		try {
+			if (bt.connect()) {
+				LCD.drawString("Bluetooth successful", 0, 3);
+			}
+		} catch (IOException e) {
+			LCD.drawString("Bluetooth failed", 0, 4);
+		}
+		
 		//Create Behaviours
 		Behavior trundle = new Trundle(pilot);
 		Behavior backup = new Backup(pilot, us);
@@ -38,7 +50,7 @@ public class Driver {
 		Behavior light = new Light(pilot, cs);
 		Behavior emergencyStop = new EmergencyStop(pilot, ts);
 		Behavior batteryLevel = new BatteryLevel();
-		Behavior bluetooth = new Bluetooth();
+		Behavior bluetooth = new Bluetooth(bt.getIn());
 		Behavior calibrate = new Calibrate(cs);
 
 		//Create Arbitrator and start it
