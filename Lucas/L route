@@ -1,0 +1,63 @@
+import lejos.hardware.lcd.LCD;
+import lejos.hardware.motor.BaseRegulatedMotor;
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.port.MotorPort;
+import lejos.robotics.chassis.Chassis;
+import lejos.robotics.chassis.Wheel;
+import lejos.robotics.chassis.WheeledChassis;
+import lejos.robotics.localization.PoseProvider;
+import lejos.robotics.navigation.MovePilot;
+import lejos.robotics.navigation.Navigator;
+import lejos.robotics.navigation.Waypoint;
+import lejos.robotics.pathfinding.Path;
+
+public class NavTest {
+		
+	final static float WHEEL_DIAMETER = 43; 
+	final static float AXLE_LENGTH = 120; 
+
+	public static void main(String [] args) {
+		//left motor & wheel
+		BaseRegulatedMotor mL = new EV3LargeRegulatedMotor(MotorPort.A);
+		Wheel wL = WheeledChassis.modelWheel(mL, WHEEL_DIAMETER).offset(-AXLE_LENGTH / 2);
+		//right motor & wheel
+		BaseRegulatedMotor mR = new EV3LargeRegulatedMotor(MotorPort.D);
+		Wheel wR = WheeledChassis.modelWheel(mR, WHEEL_DIAMETER).offset(AXLE_LENGTH / 2);
+		//wheels array, chassis object & pilot to navigate
+		Wheel[] wheels = new Wheel[] {wR, wL};
+		Chassis chassis = new WheeledChassis(wheels, WheeledChassis.TYPE_DIFFERENTIAL);
+		MovePilot pilot = new MovePilot(chassis);
+		
+		PoseProvider poseProvider = chassis.getPoseProvider();
+		
+		Navigator navigator = new Navigator(pilot, poseProvider);
+		
+		
+		Path squarePath = new Path();
+		//squarePath.add(new Waypoint(150, 0));
+		//squarePath.add(new Waypoint(550, 0));
+		squarePath.add(new Waypoint(750, 0));
+		//squarePath.add(new Waypoint(750, 450));
+		//squarePath.add(new Waypoint(750, 700));
+		squarePath.add(new Waypoint(750, 750));
+		squarePath.add(new Waypoint(600, 750));
+		//squarePath.add(new Waypoint(600, 700));
+		//squarePath.add(new Waypoint(600, 450));
+		squarePath.add(new Waypoint(600, 150));
+		//squarePath.add(new Waypoint(550, 150));
+		//squarePath.add(new Waypoint(150, 150));
+		squarePath.add(new Waypoint(0, 150));
+		squarePath.add(new Waypoint(0,0));
+		
+		navigator.setPath(squarePath);
+		navigator.followPath();
+		navigator.waitForStop();
+		
+		navigator.addNavigationListener(null);
+		
+		//returns true if path is completed
+		navigator.pathCompleted();
+		LCD.drawString(poseProvider.getPose().toString(),0,0);
+		
+	}
+}
