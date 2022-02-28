@@ -1,0 +1,66 @@
+import lejos.hardware.Button;
+import lejos.hardware.lcd.LCD;
+import lejos.hardware.port.SensorPort;
+import lejos.hardware.sensor.EV3ColorSensor;
+import lejos.robotics.SampleProvider;
+import lejos.robotics.subsumption.Behavior;
+
+public class Calibrate implements Behavior {
+	
+	private boolean isCalibrated = false;
+	private EV3ColorSensor cSensor;
+	private SampleProvider sp;
+	private boolean suppress = false;
+	private float colorSamples[] = new float[3];
+	
+	private float redThres = 1;
+	private float blueThres = 1;
+	private float greenThres = 1;
+	
+	Calibrate(EV3ColorSensor sensor) {
+		cSensor = sensor;
+		sp = cSensor.getAmbientMode();
+	}
+
+	public void action() {
+		LCD.drawString("Press enter when over RED", 0, 2); //Get red threshold
+		while (Button.ENTER.isUp() || !suppress) {
+		}
+		sp.fetchSample(colorSamples, 0); //Get sample
+		redThres = colorSamples[0];
+			
+		LCD.drawString("Press enter when over BLUE", 0, 2); //Get blue threshold
+		while (Button.ENTER.isUp() || !suppress) {
+		}
+		sp.fetchSample(colorSamples, 0); //Get sample
+		blueThres = colorSamples[2];
+		
+		LCD.drawString("Press enter when over GREEN", 0, 2); //Get green threshold
+		while (Button.ENTER.isUp() || !suppress) {
+		}
+		sp.fetchSample(colorSamples, 0); //Get sample
+		greenThres = colorSamples[1];
+		
+		isCalibrated = true;
+	}
+	
+	public void suppress() {
+		suppress = true;
+	}
+	
+	public boolean takeControl() {
+		return !isCalibrated;
+	}
+	
+	public float getRedThres() {
+		return redThres;
+	}
+	
+	public float getBlueThres() {
+		return blueThres;
+	}
+	
+	public float getGreenThres() {
+		return greenThres;
+	}
+}
