@@ -1,0 +1,50 @@
+import lejos.robotics.navigation.Navigator;
+import lejos.robotics.navigation.Waypoint;
+import lejos.robotics.pathfinding.Path;
+import lejos.robotics.subsumption.Behavior;
+
+public class FollowPath implements Behavior {
+	
+	private Navigator navigator;
+	private Path squarePath;
+	
+	private boolean suppress = false;
+	private int index = 0;
+	private Path subPath;
+	
+	public FollowPath(Navigator navigator, Path squarePath) {
+		this.navigator = navigator;
+		this.squarePath = squarePath;
+	}
+	
+	public void action() {
+		if (navigator.pathCompleted()) {
+			navigator.followPath(squarePath);
+		} else if (!navigator.isMoving()) {
+			navigator.followPath(); //don't think this will work
+		}
+		
+//		if (navigator.pathCompleted()) { //Alternate code
+//			navigator.followPath(squarePath);
+//		} else if (!navigator.isMoving()) {
+//			subPath = squarePath;
+//			for (int i = 0; i < index; i++) {
+//				subPath.remove(0);
+//			}
+//			navigator.followPath(subPath);
+//		}
+//		
+//		if (suppress) {
+//			Waypoint current = navigator.getWaypoint();
+//			index = squarePath.indexOf(current);
+//		}
+	}
+	
+	public void suppress() {
+		//suppress = true;
+	}
+	
+	public boolean takeControl() {
+		return true;
+	}
+}
