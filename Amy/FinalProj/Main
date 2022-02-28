@@ -1,0 +1,64 @@
+import lejos.hardware.motor.BaseRegulatedMotor;
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.port.MotorPort;
+import lejos.hardware.port.Port;
+import lejos.hardware.port.SensorPort;
+import lejos.hardware.sensor.EV3ColorSensor;
+import lejos.hardware.sensor.EV3TouchSensor;
+import lejos.hardware.sensor.EV3UltrasonicSensor;
+import lejos.hardware.sensor.NXTSoundSensor;
+import lejos.robotics.chassis.Chassis;
+import lejos.robotics.chassis.Wheel;
+import lejos.robotics.chassis.WheeledChassis;
+import lejos.robotics.localization.PoseProvider;
+import lejos.robotics.navigation.MovePilot;
+import lejos.robotics.navigation.Navigator;
+import lejos.robotics.navigation.Waypoint;
+import lejos.robotics.pathfinding.Path;
+import lejos.robotics.subsumption.Arbitrator;
+import lejos.robotics.subsumption.Behavior;
+
+public class Main {
+	
+	public static EV3UltrasonicSensor us = new EV3UltrasonicSensor(SensorPort.S1);
+	public static EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S2);
+	public static EV3TouchSensor ts = new EV3TouchSensor(SensorPort.S3);
+	NXTSoundSensor ss = new NXTSoundSensor(SensorPort.S4);
+	
+	private static int AXLE_LENGTH = 120;
+	private static int WHEEL_DIAMETER = 43;
+
+	public static void main(String[] args) {
+		Chassis chassis = getChassis(MotorPort.A, MotorPort.D, 43, 120);
+		MovePilot pilot = new MovePilot(chassis);
+		PoseProvider poseProvider = chassis.getPoseProvider();
+		Navigator navigator = new Navigator(pilot, poseProvider);
+		Path squarePath = getPath();
+		
+		Behavior followPath = new FollowPath(navigator, squarePath);
+		Behavior calibrate = new Calibrate(cs);
+		
+		Arbitrator ab = new Arbitrator(new Behavior[] {followPath, calibrate});
+	}
+	
+	
+	private static Chassis getChassis(Port left, Port right, int diam, int offset) { //Code to create pilot
+		BaseRegulatedMotor mL = new EV3LargeRegulatedMotor(left);
+		Wheel wLeft = WheeledChassis.modelWheel(mL, diam).offset(-offset/2);
+		BaseRegulatedMotor mR = new EV3LargeRegulatedMotor(right);
+		Wheel wRight = WheeledChassis.modelWheel(mR, diam).offset(offset/2);
+		return new WheeledChassis((new Wheel[] {wRight, wLeft}), WheeledChassis.TYPE_DIFFERENTIAL);
+	}
+	
+	private static Path getPath() {
+		Path squarePath = new Path();
+		squarePath.add(new Waypoint(750, 0));
+		squarePath.add(new Waypoint(750, 750));
+		squarePath.add(new Waypoint(600, 750));
+		squarePath.add(new Waypoint(600, 150));
+		squarePath.add(new Waypoint(0, 150));
+		squarePath.add(new Waypoint(0,0));
+		return squarePath;
+		}
+
+}
