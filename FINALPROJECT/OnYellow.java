@@ -12,6 +12,9 @@ public class OnYellow implements Behavior {
 	private MovePilot pilot;
 	private Navigator navigator;
 	
+	private int linearSpeed = 150;
+	private int angularSpeed = 150;
+	
 	public OnYellow (EV3ColorSensor cs, MovePilot pilot, Navigator navigator) {
 		this.navigator = navigator;
 		this.cs = cs;
@@ -20,8 +23,8 @@ public class OnYellow implements Behavior {
 	}
 	
 	public void action() {
-		pilot.setLinearSpeed(150);
-		pilot.setAngularSpeed(150);
+		pilot.setLinearSpeed(linearSpeed);
+		pilot.setAngularSpeed(linearSpeed);
 		navigator.stop();
 	}
 	
@@ -31,6 +34,6 @@ public class OnYellow implements Behavior {
 	
 	public boolean takeControl() {
 		sp.fetchSample(colour, 0);
-		return (colour[0] == Color.YELLOW) && (pilot.getLinearSpeed() < 150);
+		return (colour[0] == Color.YELLOW) && (pilot.getLinearSpeed() < linearSpeed);
 	}
 }
