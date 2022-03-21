@@ -24,7 +24,7 @@ public class OnYellow implements Behavior {
 	
 	public void action() {
 		pilot.setLinearSpeed(linearSpeed);
-		pilot.setAngularSpeed(linearSpeed);
+		pilot.setAngularSpeed(angularSpeed);
 		navigator.stop();
 	}
 	
