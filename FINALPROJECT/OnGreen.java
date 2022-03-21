@@ -12,6 +12,9 @@ public class OnGreen implements Behavior {
 	private MovePilot pilot;
 	private Navigator navigator;
 	
+	private int linearSpeed = 50;
+	private int angularSpeed = 50;
+	
 	public OnGreen (EV3ColorSensor cs, MovePilot pilot, Navigator navigator) {
 		this.navigator = navigator;
 		this.cs = cs;
@@ -20,8 +23,8 @@ public class OnGreen implements Behavior {
 	}
 	
 	public void action() {
-		pilot.setLinearSpeed(50);
-		pilot.setAngularSpeed(50);
+		pilot.setLinearSpeed(linearSpeed);
+		pilot.setAngularSpeed(angularSpeed);
 		navigator.stop();
 	}
 	
@@ -31,6 +34,6 @@ public class OnGreen implements Behavior {
 	
 	public boolean takeControl() {
 		sp.fetchSample(colour, 0);
-		return (colour[0] == Color.GREEN) && (pilot.getLinearSpeed() > 50);
+		return (colour[0] == Color.GREEN) && (pilot.getLinearSpeed() > linearSpeed);
 	}
 }
