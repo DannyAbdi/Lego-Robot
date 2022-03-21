@@ -41,7 +41,7 @@ public class EmergencyStop implements Behavior {
 
 class TunePlayer extends Thread {
 	public void run() {
-			playTune(); 
+		playTune(); 
 	}
 	private void playTune() {
 		Sound.playSample(new File("CarHorn.wav"), 100);
