@@ -6,6 +6,8 @@ import lejos.utility.Delay;
 
 public class BatteryLevel implements Behavior {
 	
+	private int lowBatteryPercent = 5;
+	
 	public BatteryLevel() {
 	}
 	
@@ -22,7 +24,7 @@ public class BatteryLevel implements Behavior {
 	}
 	
 	public boolean takeControl() {
-		return (Battery.getVoltage() < 5); //NUMBER IS PERCENTAGE
+		return (Battery.getVoltage() < lowBatteryPercent);
 	}
 	
 }
