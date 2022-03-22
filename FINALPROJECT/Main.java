@@ -69,6 +69,7 @@ public class Main {
 		Behavior batteryLevel = new BatteryLevel();
 		
 		Arbitrator ab = new Arbitrator(new Behavior[] {followPath, onYellow, onGreen, stopBus, emergencyStop, batteryLevel, interrupt});
+		Button.ENTER.waitForPressAndRelease();
 		ab.go();
 	}
 	
