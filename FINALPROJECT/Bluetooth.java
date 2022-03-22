@@ -26,11 +26,11 @@ public class Bluetooth {
 						s+= (char) buffer[index];
 					}
 				} catch (IOException e) {
-					LCD.drawString("BT went wrong", 0, 3);
+					e.printStackTrace();
 				}
 			}
 		} catch (IOException e) {
-			LCD.drawString("BT went wrong", 0, 3);
+			e.printStackTrace();
 		}
 		return s;
 	}
