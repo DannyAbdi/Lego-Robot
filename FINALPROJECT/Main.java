@@ -69,7 +69,10 @@ public class Main {
 		Behavior batteryLevel = new BatteryLevel();
 		
 		Arbitrator ab = new Arbitrator(new Behavior[] {followPath, onYellow, onGreen, stopBus, emergencyStop, batteryLevel, interrupt});
+		System.out.println("                             "); //I think this should clear the "arbitrator created" text
+		LCD.drawString("Enter to start", 0, 1);
 		Button.ENTER.waitForPressAndRelease();
+		LCD.clearDisplay();
 		ab.go();
 	}
 	
