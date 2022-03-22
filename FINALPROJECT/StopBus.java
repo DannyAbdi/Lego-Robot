@@ -67,14 +67,16 @@ public class StopBus implements Behavior {
 	}
 	
 	public boolean takeControl() {
-		clap.fetchSample(soundLevel, 0);
-		Boolean BTMessage = false;
-		if (bt != null) { //Check that bluetooth is connected
-			BTMessage = bt.getMessage().equals("STOP");
-		}
-		if (BTMessage || soundLevel[0] == 1) {
-			stopping = true;
-			LCD.drawString("STOPPING", 0, 4);
+		if (!stopping) { //Doesn't need to check if stopping is already true
+			clap.fetchSample(soundLevel, 0);
+			Boolean BTMessage = false;
+			if (bt != null) { //Check that bluetooth is connected
+				BTMessage = bt.getMessage().equals("STOP");
+			}
+			if (BTMessage || soundLevel[0] == 1) {
+				stopping = true;
+				LCD.drawString("STOPPING", 0, 4);
+			}
 		}
 		rm.fetchSample(light, 0);   
 		return (light[0] == Color.RED && stopping);
