@@ -38,7 +38,8 @@ public class Main {
 //		LCD.drawString("Robot created by", 0, 2);
 //		LCD.drawString("Amy, Lucas,", 0, 3);
 //		LCD.drawString("Danny & Yashil", 0, 4);
-//		Delay.msDelay(5000);
+//		LCD.drawString("Enter to start", 0, 6);
+//		Button.ENTER.waitForPressAndRelease();
 //		LCD.clearDisplay();
 //		
 		BTConnect btc = new BTConnect();
@@ -69,7 +70,7 @@ public class Main {
 		Behavior batteryLevel = new BatteryLevel();
 		
 		Arbitrator ab = new Arbitrator(new Behavior[] {followPath, onYellow, onGreen, stopBus, emergencyStop, batteryLevel, interrupt});
-		System.out.println("                             "); //I think this should clear the "arbitrator created" text
+		System.out.println("                             "); //Should clear the "arbitrator created" text
 		LCD.drawString("Enter to start", 0, 1);
 		Button.ENTER.waitForPressAndRelease();
 		LCD.clearDisplay();
