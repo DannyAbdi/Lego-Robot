@@ -48,12 +48,14 @@ public class Main {
 			if (btc.connect()) {
 				LCD.drawString("Bluetooth successful", 0, 3);
 				bluetooth = new Bluetooth(btc.getIn());
-				Delay.msDelay(500);
-				LCD.clearDisplay();
+			} else {
+				LCD.drawString("No connection", 0, 3);
 			}
 		} catch (IOException e) {
 			LCD.drawString("Bluetooth failed", 0, 4);
 		}
+		Delay.msDelay(500);
+		LCD.clearDisplay();
 	
 		Chassis chassis = getChassis(MotorPort.A, MotorPort.D, WHEEL_DIAMETER, AXLE_LENGTH);
 		MovePilot pilot = new MovePilot(chassis);
