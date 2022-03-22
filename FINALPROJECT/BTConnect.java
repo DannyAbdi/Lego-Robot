@@ -1,5 +1,4 @@
 import java.io.BufferedInputStream;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -12,9 +11,8 @@ public class BTConnect {
 	private static String IPaddress = "10.0.1.8";
 	private static int port = 1234;
 	public static Socket connection = new Socket();
-	public static DataInputStream dis;
-	public static DataOutputStream dos;
 	private static BufferedInputStream in = null;
+	private static DataOutputStream out = null;
 	private boolean isConnected = false;
 	
 	public boolean connect() throws IOException{
@@ -27,7 +25,7 @@ public class BTConnect {
 		}
 		if (connection != null) {
 			in = new BufferedInputStream(connection.getInputStream());
-			LCD.drawString("Connected", 0, 7);
+			out = new DataOutputStream(connection.getOutputStream());
 			isConnected = true;
 		}
 		return isConnected;
@@ -37,5 +35,8 @@ public class BTConnect {
 		return in;
 	}
 	
+	public DataOutputStream getOut() {
+		return out;
+	}
 	
 }
