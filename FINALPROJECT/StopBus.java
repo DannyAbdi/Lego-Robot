@@ -28,8 +28,7 @@ public class StopBus implements Behavior {
 	
 	//Sound sensor
 	private NXTSoundSensor ss;
-	private SensorMode sound;
-	private SampleProvider clap;
+	private SampleProvider sound;
 	private float[] soundLevel = new float[1];
 	
 	StopBus(Navigator navigator, EV3TouchSensor ts, EV3ColorSensor cs, NXTSoundSensor ss, Bluetooth bt) {
@@ -40,8 +39,7 @@ public class StopBus implements Behavior {
 		this.cs = cs;
 		tm = this.ts.getTouchMode();
 		rm = this.cs.getColorIDMode();
-		sound = (SensorMode) this.ss.getDBAMode();
-		clap = new ClapFilter(sound, 0.6f, 100);
+		sound = this.ss.getDBAMode();
 	}
 	
 	public void action() {
@@ -73,7 +71,7 @@ public class StopBus implements Behavior {
 			if (bt != null) { //Check that bluetooth is connected
 				BTMessage = bt.getMessage().equals("STOP");
 			}
-			if (BTMessage || soundLevel[0] == 1) {
+			if (BTMessage || soundLevel[0] >= 0.6) {
 				stopping = true;
 				LCD.drawString("STOPPING", 0, 4);
 			}
