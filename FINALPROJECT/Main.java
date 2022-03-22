@@ -84,6 +84,7 @@ public class Main {
 		Arbitrator ab = new Arbitrator(new Behavior[] {followPath, onYellow, onGreen, stopBus, emergencyStop, batteryLevel, interrupt});
 		LCD.drawString("Enter to start", 0, 4);
 		Button.ENTER.waitForPressAndRelease();
+		LCD.clearDisplay();
 		ab.go();
 	}
 	
