@@ -37,12 +37,12 @@ public class Bluetooth {
 	
 	public void sendMessage(String message) {
         if (message.length() > 0) {
-            byte[] send = message.getBytes();
-            try {
-				out.write(send);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		byte[] send = message.getBytes();
+		try {
+			out.write(send);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         }
     }
 }
