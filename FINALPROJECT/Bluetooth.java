@@ -1,7 +1,6 @@
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import lejos.hardware.lcd.LCD;
 
 public class Bluetooth {
 
@@ -10,9 +9,8 @@ public class Bluetooth {
 	private static int MAX_READ = 30;
 	private byte[] buffer = new byte[MAX_READ];
 	
-	public Bluetooth(BufferedInputStream in, DataOutputStream out) {
+	public Bluetooth(BufferedInputStream in) {
 		this.in = in;
-		this.out = out;
 	}
 
 	public String getMessage() {
