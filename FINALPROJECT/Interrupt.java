@@ -22,5 +22,4 @@ public class Interrupt implements Behavior {
 	public boolean takeControl() {
 		return (Button.ESCAPE.isDown());
 	}
-	
 }
