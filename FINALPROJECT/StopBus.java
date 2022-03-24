@@ -72,12 +72,10 @@ public class StopBus implements Behavior {
 			BTMessage = bt.getMessage().equals("STOP");
 		}
 		if (BTMessage || soundLevel[0] == 1) {
-			bt.sendMessage("BUS STOPPING");
 			stopping = true;
 			LCD.drawString("STOPPING", 0, 5);
 		}
 		rm.fetchSample(light, 0);   
 		return (light[0] == Color.RED && stopping);
-	}
-	
+	}	
 }
