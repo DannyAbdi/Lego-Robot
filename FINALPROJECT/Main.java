@@ -1,5 +1,4 @@
 import java.io.IOException;
-
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.BaseRegulatedMotor;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
@@ -32,15 +31,15 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-//		//Welcome screen
-//		LCD.drawString("WELCOME", 0, 2);
-//		Delay.msDelay(2000);
-//		LCD.drawString("Robot created by", 0, 2);
-//		LCD.drawString("Amy, Lucas,", 0, 3);
-//		LCD.drawString("Danny & Yashil", 0, 4);
-//		Delay.msDelay(5000);
-//		LCD.clearDisplay();
-//		
+		//Welcome screen
+		LCD.drawString("WELCOME", 0, 2);
+		Delay.msDelay(2000);
+		LCD.drawString("Robot created by", 0, 2);
+		LCD.drawString("Amy, Lucas,", 0, 3);
+		LCD.drawString("Danny & Yashil", 0, 4);
+		Delay.msDelay(5000);
+		LCD.clearDisplay();
+		
 		BTConnect btc = new BTConnect();
 		Bluetooth bluetooth = null;
 		try {
@@ -79,5 +78,4 @@ public class Main {
 		Wheel wRight = WheeledChassis.modelWheel(mR, diam).offset(offset/2);
 		return new WheeledChassis((new Wheel[] {wRight, wLeft}), WheeledChassis.TYPE_DIFFERENTIAL);
 	}
-
 }
