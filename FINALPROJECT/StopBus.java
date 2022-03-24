@@ -28,7 +28,8 @@ public class StopBus implements Behavior {
 	
 	//Sound sensor
 	private NXTSoundSensor ss;
-	private SampleProvider sound;
+	private SensorMode sound;
+	private SampleProvider clap;
 	private float[] soundLevel = new float[1];
 	
 	StopBus(Navigator navigator, EV3TouchSensor ts, EV3ColorSensor cs, NXTSoundSensor ss, Bluetooth bt) {
@@ -39,13 +40,13 @@ public class StopBus implements Behavior {
 		this.cs = cs;
 		tm = this.ts.getTouchMode();
 		rm = this.cs.getColorIDMode();
-		sound = this.ss.getDBAMode();
+		sound = (SensorMode) this.ss.getDBAMode();
+		clap = new ClapFilter(sound, 0.6f, 100);
 	}
 	
 	public void action() {
 		navigator.stop();
-		
-		bt.sendMessage("BUS STOPPED");
+
 		tm.fetchSample(touch, 0);
 		count = 0;
 		
@@ -65,16 +66,14 @@ public class StopBus implements Behavior {
 	}
 	
 	public boolean takeControl() {
-		if (!stopping) { //Doesn't need to check if stopping is already true
-			sound.fetchSample(soundLevel, 0);
-			Boolean BTMessage = false;
-			if (bt != null) { //Check that bluetooth is connected
-				BTMessage = bt.getMessage().equals("STOP");
-			}
-			if (BTMessage || soundLevel[0] >= 0.6) {
-				stopping = true;
-				LCD.drawString("STOPPING", 0, 4);
-			}
+		clap.fetchSample(soundLevel, 0);
+		Boolean BTMessage = false;
+		if (bt != null) {
+			BTMessage = bt.getMessage().equals("STOP");
+		}
+		if (BTMessage || soundLevel[0] == 1) {
+			stopping = true;
+			LCD.drawString("STOPPING", 0, 5);
 		}
 		rm.fetchSample(light, 0);   
 		return (light[0] == Color.RED && stopping);
