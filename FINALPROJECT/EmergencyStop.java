@@ -10,10 +10,9 @@ public class EmergencyStop implements Behavior {
 	
 	private Navigator navigator;
 	private float[] distance = new float[1];
-	private float stopDistance = 0.1f;
+	private float TEN_CM = 0.1f;
 	private EV3UltrasonicSensor us;
 	private SampleProvider sp;
-	private boolean suppress = false;
 	
 	EmergencyStop(Navigator navigator, EV3UltrasonicSensor us) {
 		this.navigator = navigator;
@@ -25,24 +24,24 @@ public class EmergencyStop implements Behavior {
 		navigator.stop();
 		TunePlayer sound = new TunePlayer();
 		sound.run();
-		while (distance[0] <= stopDistance || !suppress) {
+		while (distance[0] <= TEN_CM) {
 			sp.fetchSample(distance, 0);
 		}
 	}
 	
 	public void suppress() {
-		suppress = true;
+		
 	}
 	
 	public boolean takeControl() {
 		sp.fetchSample(distance, 0);
-		return (distance[0] <= stopDistance);
+		return (distance[0] <= TEN_CM);
 	}
 }
 
 class TunePlayer extends Thread {
 	public void run() {
-		playTune(); 
+			playTune(); 
 	}
 	private void playTune() {
 		Sound.playSample(new File("CarHorn.wav"), 100);
