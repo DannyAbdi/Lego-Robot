@@ -38,5 +38,4 @@ public class BTConnect {
 	public DataOutputStream getOut() {
 		return out;
 	}
-	
 }
