@@ -66,7 +66,7 @@ public class StopBus implements Behavior {
 	
 	public boolean takeControl() {
 		if (!stopping) { //Doesn't need to check if stopping is already true
-			clap.fetchSample(soundLevel, 0);
+			sound.fetchSample(soundLevel, 0);
 			Boolean BTMessage = false;
 			if (bt != null) { //Check that bluetooth is connected
 				BTMessage = bt.getMessage().equals("STOP");
