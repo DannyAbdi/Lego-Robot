@@ -1,5 +1,4 @@
 import java.io.File;
-
 import lejos.hardware.Sound;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.robotics.SampleProvider;
