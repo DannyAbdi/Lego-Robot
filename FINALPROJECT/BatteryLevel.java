@@ -25,6 +25,5 @@ public class BatteryLevel implements Behavior {
 	
 	public boolean takeControl() {
 		return (Battery.getVoltage() < lowBatteryPercent);
-	}
-	
+	}	
 }
