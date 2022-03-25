@@ -6,7 +6,7 @@ import lejos.utility.Delay;
 
 public class BatteryLevel implements Behavior {
 	
-	private int lowBatteryPercent = 100;
+	private int lowBatteryPercent = 5;
 	private boolean suppress = false;
 	
 	public BatteryLevel() {
