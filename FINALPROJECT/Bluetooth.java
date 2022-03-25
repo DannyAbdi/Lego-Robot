@@ -9,8 +9,9 @@ public class Bluetooth {
 	private static int MAX_READ = 30;
 	private byte[] buffer = new byte[MAX_READ];
 	
-	public Bluetooth(BufferedInputStream in) {
+	public Bluetooth(BufferedInputStream in, DataOutputStream out) {
 		this.in = in;
+		this.out = out;
 	}
 
 	public String getMessage() {
@@ -35,12 +36,12 @@ public class Bluetooth {
 	
 	public void sendMessage(String message) {
         if (message.length() > 0) {
-		byte[] send = message.getBytes();
-		try {
-			out.write(send);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        	byte[] send = message.getBytes();
+        	try {
+        		out.write(send);
+        	} catch (IOException e) {
+        		e.printStackTrace();
+        	}
         }
     }
 }
