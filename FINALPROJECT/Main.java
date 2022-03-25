@@ -45,7 +45,7 @@ public class Main {
 		try {
 			if (btc.connect()) {
 				LCD.drawString("Bluetooth successful", 0, 3);
-				bluetooth = new Bluetooth(btc.getIn());
+				bluetooth = new Bluetooth(btc.getIn(), btc.getOut());
 				Delay.msDelay(500);
 				LCD.clearDisplay();
 			}
