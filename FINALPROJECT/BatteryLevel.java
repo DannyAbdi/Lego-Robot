@@ -6,13 +6,14 @@ import lejos.utility.Delay;
 
 public class BatteryLevel implements Behavior {
 	
-	private int lowBatteryPercent = 5;
+	private int lowBatteryPercent = 100;
+	private boolean suppress = false;
 	
 	public BatteryLevel() {
 	}
 	
 	public void action() {
-		while (true) {
+		while (!suppress) {
 			LCD.drawString("BATTERY LOW", 0, 4);
 			Sound.beep();
 			Delay.msDelay(500);
@@ -20,7 +21,7 @@ public class BatteryLevel implements Behavior {
 	}
 	
 	public void suppress() {
-
+		suppress = true;
 	}
 	
 	public boolean takeControl() {
